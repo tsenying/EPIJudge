@@ -28,17 +28,18 @@ def x_dutch_flag_partition(pivot_index, A):
 def dutch_flag_partition(pivot_index, A):
     pivot = A[pivot_index]
     smaller, equal, larger = 0, 0, len(A)
+    # done if equal index reaches larger
     while equal < larger:
+        # A[equal] is next unclassified element
         if A[equal] < pivot:
             A[smaller], A[equal] = A[equal], A[smaller]
-            smaller += 1
             equal += 1
-        elif A[equal] < pivot:
-            equal += 1
-        else # A[equal] > pivot
+            smaller +=1
+        elif A[equal] == pivot:
+            equal +=1
+        else: # A[equal] > pivot
             larger -= 1
             A[equal], A[larger] = A[larger], A[equal]
-
 
 @enable_executor_hook
 def dutch_flag_partition_wrapper(executor, A, pivot_idx):
