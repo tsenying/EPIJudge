@@ -2,7 +2,7 @@ from test_framework import generic_test
 
 
 # O(n**2)
-def buy_and_sell_stock_once(prices):
+def x_buy_and_sell_stock_once(prices):
     # TODO - you fill in here.
     max_profit = 0.0
     for i in range(len(prices) - 1):
@@ -15,11 +15,18 @@ def buy_and_sell_stock_once(prices):
 def buy_and_sell_stock_once(prices):
     # TODO - you fill in here.
     max_profit = 0.0
-    per_day_profit = [0.0] * len(prices)
+    min_price = prices[0]
+
     for i in range(1, len(prices)):
-        
+        profit = prices[i] - min_price
+        if profit > 0 and profit > max_profit:
+            max_profit = profit
+        if prices[i] < min_price:
+            min_price = prices[i]
+    return max_profit
 
 
+P=[310,315,275,295,260,270,290,230,255,250]
 
 if __name__ == '__main__':
     exit(
