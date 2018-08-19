@@ -1,7 +1,7 @@
 from test_framework import generic_test
 
 
-def merge_two_sorted_lists(L1, L2):
+def x_merge_two_sorted_lists(L1, L2):
     print('L1=',L1)
     print('L2=',L2)
     # TODO - you fill in here.
@@ -47,6 +47,26 @@ def merge_two_sorted_lists(L1, L2):
     print('R=', R)
     return R
 
+class ListNode(object):
+    """docstring for ."""
+    def __init__(self, data=0, next=None):
+        self.data = data
+        self.next = next
+
+def merge_two_sorted_lists(L1, L2):
+    head = tail = ListNode()
+
+    while L1 and L2:
+        if L1.data <= L2.data:
+            tail.next = L1
+            L1 = L1.next
+        else:
+            tail.next = L2
+            L2 = L2.next
+        tail = tail.next
+
+    tail.next = L1 or L2
+    return head.next
 
 if __name__ == '__main__':
     exit(
