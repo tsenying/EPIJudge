@@ -2,8 +2,50 @@ from test_framework import generic_test
 
 
 def merge_two_sorted_lists(L1, L2):
+    print('L1=',L1)
+    print('L2=',L2)
     # TODO - you fill in here.
-    return None
+    R, R_end = None, None
+    #
+    # init merged list
+    if L1 and L2:
+        if L1.data <= L2.data:
+            R, R_end = L1, L1
+            L1 = L1.next
+        else:
+            R, R_end = L2, L2
+            L2 = L2.next
+            print("if L2: R=",R)
+    elif L1:
+        R, R_end = L1, L1
+        L1 = L1.next
+    elif L2:
+        R, R_end = L2, L2
+        L2 = L2.next
+    #
+    loop = 0
+    while L1 and L2:
+        if L1.data <= L2.data:
+            R_end.next = L1
+            R_end = L1
+            L1 = L1.next
+            while loop < 1:
+                loop +=1
+        else:
+            R_end.next = L2
+            R_end = L2
+            L2 = L2.next
+    while L1:
+        R_end.next = L1
+        R_end = L1
+        L1 = L1.next
+    while L2:
+        R_end.next = L2
+        R_end = L2
+        L2 = L2.next
+    # R_end.next = None
+    print('R=', R)
+    return R
 
 
 if __name__ == '__main__':
