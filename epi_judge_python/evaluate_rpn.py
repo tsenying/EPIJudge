@@ -5,17 +5,30 @@ from test_framework import generic_test
 # 2. "A,B,o": where A,B are RPN and o = [+-x/]
 # e.g. "3,4,+,2,x,1,+"
 
+class InputError(Exception):
+    """Exception raised for errors in the input.
+
+    Attributes:
+        expression -- input expression in which the error occurred
+        message -- explanation of the error
+    """
+
+    def __init__(self, expression, message):
+        self.expression = expression
+        self.message = message
+
 # Hint: process subexpressions, keeping values on a stack
 #       How should operators be handles?
 import re, operator
 def evaluate(expression):
+    print('\n----- evaluate expression=', expression)
     # TODO - you fill in here.
     def operate(A, B, o):
         if o == '+':
             return operator.add(A,B)
         elif o == '-':
-            return operator.subtract(A,B)
-        elif o == 'x':
+            return operator.sub(A,B)
+        elif o == '*':
             return operator.mul(A,B)
         elif o == '/':
             return operator.floordiv(A,B)
@@ -23,31 +36,28 @@ def evaluate(expression):
     stack = []
     A, B, o = (None,)*3
     re_digits = r'-*\d+'
-    re_operand = r'^[+-x/]+'
+    re_operand = r'^[+-/*]+'
     for t in expression.split(','):
         print("t=",t)
-        if not A:
-            m = re.match(re_digits, t)
-            print('if not A: m=', m)
-            A = int(m.group())
-            stack.append(A)
-            print('if not A: stack=', stack)
-        elif not B:
-            m = re.match(re_digits, t)
-            print('if not B: m=', m)
-            B = int(m.group())
-            stack.append(B)
-            print('if not B: stack=', stack)
-        elif not o:
-            m = re.match(re_operand, t)
-            print('if not o: m=', m)
+        m = re.match(re_digits, t)
+        if m:
+            print('digits: m=', m)
+            digits = int(m.group())
+            stack.append(digits)
+            print('digits: stack=', stack)
+            continue
+        #
+        m = re.match(re_operand, t)
+        if m:
+            print('operand: m=', m)
             o = m.group()
             B = stack.pop()
             A = stack.pop()
             result = operate(A, B, o)
             stack.append(result)
-            print('if not o: stack=', stack)
-            A, o = (None,)*2
+            print('operand: stack=', stack)
+            continue
+        raise InputError(t, 'Unknown token')
     return stack.pop()
 
 
