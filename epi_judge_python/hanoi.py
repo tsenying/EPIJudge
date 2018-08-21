@@ -6,10 +6,30 @@ from test_framework.test_utils import enable_executor_hook
 
 NUM_PEGS = 3
 
-
 def compute_tower_hanoi(num_rings):
+    # 1. move n-1 pegs to aux pole
+    # 2. move n-th disk to target
+    # 3. move n-1 pegs onto target
+    def move_pegs(n, source, target, aux):
+        print('n={},source={},target={},aux={}'.format(n, source, target, aux))
+        if n > 0:
+            # 1. note aux and target poles switched in call
+            move_pegs(n-1, source, aux, target)
+            # 2.
+            pegs[target].append(pegs[source].pop())
+            result.append([source, target])
+            # 3.
+            move_pegs(n-1, aux, target, source)
+    #
+    result = []
+    # initialize pegs
+    pegs = [list(reversed(range(1, num_rings + 1)))] + \
+            [[] for _ in range(1, NUM_PEGS)]
     # TODO - you fill in here.
-    return []
+    print('compute_tower_hanoi, pegs=', pegs)
+    move_pegs(num_rings, 0, 1, 2)
+    print('compute_tower_hanoi, pegs=', pegs)
+    return result
 
 
 @enable_executor_hook
