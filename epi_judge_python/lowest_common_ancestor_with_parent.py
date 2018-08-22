@@ -7,8 +7,32 @@ from test_framework.test_utils import enable_executor_hook
 
 
 def lca(node0, node1):
+    print('node0={}, node1={}'.format(node0, node1))
     # TODO - you fill in here.
-    return None
+    def get_depth(node):
+        depth = 0
+        while node.parent:
+            depth += 1
+            node = node.parent
+        return depth
+
+    depth0, depth1 = map(get_depth, (node0, node1))
+    print("depth0={}, depth1={}".format(depth0, depth1))
+    # make depth0 the deeper node to simplify code
+    if depth0 < depth1:
+        depth0, depth1 = depth1, depth0
+        node0, node1 = node1, node0
+
+    # ascend deeper node to same depth as shallower node
+    depth_diff = depth0 - depth1
+    while depth_diff:
+        depth_diff -= 1
+        node0 = node0.parent
+
+    # traverse up to root until nodes match
+    while node0 is not node1:
+        node0, node1 = node0.parent, node1.parent
+    return node0
 
 
 @enable_executor_hook
