@@ -37,7 +37,7 @@ def inorder_traversal(tree, result):
 def postorder_traversal(tree, result):
     result = tree_traversal(tree, result, 1)
 
-def is_balanced_binary_tree(tree):
+def x_is_balanced_binary_tree(tree):
     # TODO - you fill in here.
     def check_balance(tree):
         if tree:
@@ -60,6 +60,35 @@ def is_balanced_binary_tree(tree):
         balanced = False
     #
     return balanced
+
+import collections
+def is_balanced_binary_tree(tree):
+    BalancedStatusWithHeight = collections.namedtuple(
+        'BalancedStatusWithHeight', ('balanced', 'height')
+    )
+
+    def check_balance(tree):
+        # 1. base case, tree == None
+        if not tree:
+            return BalancedStatusWithHeight(True, -1)
+        #
+        # Postorder traversal,
+        #   check left sub tree, check right sub tree, check root
+        left_result = check_balance(tree.left)
+        if not left_result.balanced:
+            return left_result
+
+        right_result = check_balance(tree.right)
+        if not right_result.balanced:
+            return right_result
+
+        is_balanced = abs(left_result.height - right_result.height) <= 1
+        height = max(left_result.height, right_result.height) + 1
+
+        return BalancedStatusWithHeight(is_balanced, height)
+
+    return check_balance(tree).balanced
+
 
 
 if __name__ == '__main__':
