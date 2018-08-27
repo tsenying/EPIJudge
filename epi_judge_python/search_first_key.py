@@ -14,7 +14,7 @@ def binary_search(A, k):
 
 # e.g.
 # A = [1, 1, 2, 3, 4, 5, 6, 7], k = 1, return = 0 (not 1)
-def search_first_of_k(A, k):
+def x_search_first_of_k(A, k):
     # TODO - you fill in here.
     # 0. set not found lower and upper bounds
     # 1. do binary search
@@ -28,6 +28,19 @@ def search_first_of_k(A, k):
         found_index = lower_found_index
         lower_found_index = binary_search(A[:found_index],k)
     return found_index
+
+def search_first_of_k(A, k):
+    lower, upper, result = 0, len(A) - 1, -1
+    while lower <= upper:
+        mid = (upper - lower) // 2 + lower
+        if k < A[mid]:
+            upper = mid - 1
+        elif k == A[mid]:
+            result = mid
+            upper = mid - 1
+        else:
+            lower = mid + 1
+    return result
 
 
 if __name__ == '__main__':
