@@ -1,11 +1,12 @@
 from test_framework import generic_test
 
 A=[2,3,1]
-def x_partition(A, lo, hi):
+def partition(A, lo, hi):
     print('partition: A={},lo={},hi={}'.format(A,lo,hi))
     i = lo # A for index < i is less than pivot value
     j = hi # A for index > j is greater than pivot value
-    pivot_value = A[lo]
+    pivot_value = A[(hi-lo)//2 + lo]
+    print('partition pivot_value=', pivot_value)
     while True:
         if i >= j:
             print('partition i={}, j={}, return={}'.format(i,j,i))
@@ -15,14 +16,12 @@ def x_partition(A, lo, hi):
         while A[j] > pivot_value:
             j -= 1
         A[i], A[j] = A[j], A[i]
-        i += 1
-        j -= 1
 
 import random
-def partition(A, left, right):
+def partition_from_exercise_11_8(A, left, right):
     print('partition: A={},left={},right={}'.format(A,left,right))
     # pivot_index = random.randint(left, right)
-    pivot_index = left
+    pivot_index = (len(A)-1)//2
     pivot_value = A[pivot_index]
     new_pivot_index = left
     # swap pivot value out of the way during partitioning
