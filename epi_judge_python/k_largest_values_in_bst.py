@@ -1,10 +1,30 @@
 from test_framework import generic_test, test_utils
 
 
-def find_k_largest_in_bst(tree, k):
+def x_find_k_largest_in_bst(tree, k):
     # TODO - you fill in here.
-    return None
+    def inorder_traversal(tree):
+        if tree.left:
+            inorder_traversal(tree.left)
+        T.append(tree.data)
+        if tree.right:
+            inorder_traversal(tree.right)
+            #
+    T = []
+    inorder_traversal(tree)
+    return T[-k:]
 
+def find_k_largest_in_bst(tree, k):
+    def find_k_largest_in_bst_helper(tree):
+        if tree and (len(kth_largest_elements) < k):
+            find_k_largest_in_bst_helper(tree.right)
+            if (len(kth_largest_elements) < k):
+                kth_largest_elements.append(tree.data)
+                find_k_largest_in_bst_helper(tree.left)
+                #
+    kth_largest_elements = []
+    find_k_largest_in_bst_helper(tree)
+    return kth_largest_elements
 
 if __name__ == '__main__':
     exit(
