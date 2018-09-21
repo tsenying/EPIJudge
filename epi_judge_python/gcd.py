@@ -2,7 +2,7 @@ from test_framework import generic_test
 
 # chapter 15 intro greatest common divisor
 # using Euclidean algorithm: https://en.wikipedia.org/wiki/Euclidean_algorithm
-def gcd(x, y):
+def gcd_recursive(x, y):
     # TODO - you fill in here.
     print('x={}, y={}, x%y={}'.format(x, y, (x%y if y!=0 else -1)))
     if y == 0:
@@ -13,6 +13,14 @@ def gcd(x, y):
         # it's as if initially called with gcd(y,x), just one extra call, i.e.
         # gcd(3,14) == gcd(14,3)
         return gcd(y, x%y)
+
+# non-recursive
+def gcd(x, y):
+    if x < y:
+        x, y = y, x
+    while y != 0:
+        y, x = x%y, y
+    return x
 
 
 if __name__ == '__main__':
