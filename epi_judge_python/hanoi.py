@@ -6,7 +6,7 @@ from test_framework.test_utils import enable_executor_hook
 
 NUM_PEGS = 3
 
-def compute_tower_hanoi(num_rings):
+def x_compute_tower_hanoi(num_rings):
     # 1. move n-1 pegs to aux pole
     # 2. move n-th disk to target
     # 3. move n-1 pegs onto target
@@ -29,6 +29,28 @@ def compute_tower_hanoi(num_rings):
     print('compute_tower_hanoi, pegs=', pegs)
     move_pegs(num_rings, 0, 1, 2)
     print('compute_tower_hanoi, pegs=', pegs)
+    return result
+
+def compute_tower_hanoi(num_rings):
+    # 1. move n-1 disks to spare pole
+    # 2. move n-th disk to target
+    # 3. move n-1 disks onto target
+    def move(n, source, target, spare):
+        print('move, n={}, source={}, target={}, spare={}'.format(n, source, target, spare))
+        if n > 0:
+            move(n - 1, source, spare, target)
+            pegs[target].append(pegs[source].pop())
+            result.append((source, target))
+            print(pegs[0], pegs[1], pegs[2], '##############', sep = '\n')
+            move(n - 1, spare, target, source)
+
+    result = []
+    # initialize pegs
+    pegs = [list(reversed(range(1, num_rings + 1)))] + \
+            [[] for _ in range(1, NUM_PEGS)]
+    print('num_rings=', num_rings, 'pegs=', pegs)
+    move(num_rings, 0, 1, 2)
+    print(result)
     return result
 
 
