@@ -8,32 +8,36 @@ right = BstNode(3)
 root = BstNode(2,left,right)
 print('root={}, left={}, right={}'.format(root,left,right))
 
-result = []
-def tree_traversal(tree, result, order):
+def tree_traversal(tree, order, result):
     # TODO - you fill in here.
+    # print('tree_traversal,tree={},result={},order={}'.format(tree, result, order))
     if tree:
         if order == -1:
-            print('Preorder: {}'.format(tree.data))
+            # print('Preorder: {}'.format(tree.data))
             result.append(tree.data)
-        tree_traversal(tree.left, result, order)
+        tree_traversal(tree.left, order, result)
         if order == 0:
-            print('Inorder: {}'.format(tree.data))
+            # print('Inorder: {}'.format(tree.data))
             result.append(tree.data)
-        tree_traversal(tree.right, result, order)
+        tree_traversal(tree.right, order, result)
         if order == 1:
-            print('Postorder: {}'.format(tree.data))
+            # print('Postorder: {}'.format(tree.data))
             result.append(tree.data)
-    print('tree={}, result={}'.format(tree, result))
+    # print('result={}'.format(result))
     return result
 
-def preorder_traversal(tree, result):
-    result = tree_traversal(tree, result, -1)
+def preorder_traversal(tree):
+    result=[]
+    return tree_traversal(tree, -1, result)
 
-def inorder_traversal(tree, result):
-    result = tree_traversal(tree, result, 0)
+def inorder_traversal(tree):
+    print('inorder_traversal')
+    result=[]
+    return tree_traversal(tree, 0, result)
 
-def postorder_traversal(tree, result):
-    result = tree_traversal(tree, result, 1)
+def postorder_traversal(tree):
+    result=[]
+    return tree_traversal(tree, 1, result)
 
 
 if __name__ == '__main__':
