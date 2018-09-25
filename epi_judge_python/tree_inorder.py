@@ -1,11 +1,11 @@
 from test_framework import generic_test
 from bst_node import BstNode
 
-left_left = BstNode(4)
-left_right = BstNode(5)
-left = BstNode(1, left_left, left_right)
-right = BstNode(3)
-root = BstNode(2,left,right)
+left_left = BstNode(2)
+left_right = BstNode(4)
+left = BstNode(3, left_left, left_right)
+right = BstNode(6)
+root = BstNode(5,left,right)
 print('root={}, left={}, right={}'.format(root,left,right))
 
 def tree_traversal(tree, order, result):
@@ -38,6 +38,15 @@ def inorder_traversal(tree):
 def postorder_traversal(tree):
     result=[]
     return tree_traversal(tree, 1, result)
+
+def search_bst(tree, key):
+    print(tree, key)
+    if not tree or tree.data == key:
+        return tree
+    if key < tree.data:
+        return search_bst(tree.left, key)
+    else:
+        return search_bst(tree.right, key)
 
 
 if __name__ == '__main__':

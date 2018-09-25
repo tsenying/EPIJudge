@@ -1,5 +1,17 @@
 from test_framework import generic_test, test_utils
 
+def find_k_largest_in_bst(tree, k):
+    # since bst is inorder,
+    # do reverse inorder traversal until k largest elements traversed
+    def find_k_largest_helper(tree):
+        if tree and len(k_largest) < k:
+            find_k_largest_helper(tree.right)
+            if len(k_largest) < k:
+                k_largest.append(tree.data)
+                find_k_largest_helper(tree.left)
+    k_largest = []
+    find_k_largest_helper(tree)
+    return k_largest
 
 def x_find_k_largest_in_bst(tree, k):
     # TODO - you fill in here.
@@ -14,7 +26,7 @@ def x_find_k_largest_in_bst(tree, k):
     inorder_traversal(tree)
     return T[-k:]
 
-def find_k_largest_in_bst(tree, k):
+def soln_find_k_largest_in_bst(tree, k):
     def find_k_largest_in_bst_helper(tree):
         if tree and (len(kth_largest_elements) < k):
             find_k_largest_in_bst_helper(tree.right)
