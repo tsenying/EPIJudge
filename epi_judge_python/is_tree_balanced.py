@@ -89,6 +89,39 @@ def is_balanced_binary_tree(tree):
 
     return check_balance(tree).balanced
 
+# tree is balanced if left subtree and right subtree height do not differ by more than 1
+def is_balanced_binary_tree(tree):
+    print('tree=', tree)
+    BalancedAndHeight = collections.namedtuple('BalancedAndHeight', ['balanced', 'height'])
+
+    def balance_checker(tree):
+        # base case, tree is None
+        if not tree:
+            # return height = -1 so that in a recursive call for leaf node,
+            # we add 1, resulting in height of 0 for a 1 node tree
+            print('not tree')
+            return BalancedAndHeight(True, -1)
+
+        left_balance = balance_checker(tree.left)
+        if not left_balance.balanced:
+            print('not left_balance.balanced', left_balance)
+            return left_balance
+
+        right_balance = balance_checker(tree.right)
+        if not right_balance.balanced:
+            print('not right_balance', right_balance)
+            return right_balance
+
+        # check left and right sub tree do not differ by more than 1 in height
+        is_balanced = abs(left_balance.height - right_balance.height) <= 1
+        height = max(left_balance.height, right_balance.height) + 1
+        tree_balance = BalancedAndHeight(is_balanced, height)
+        print('tree balanced:', tree_balance)
+        return tree_balance
+
+    balance = balance_checker(tree)
+    print('balance=', balance)
+    return balance.balanced
 
 
 if __name__ == '__main__':
