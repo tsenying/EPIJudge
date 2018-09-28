@@ -22,7 +22,7 @@ d = BstNode('D',None,g)
 c = BstNode('C',None,d)
 h = BstNode('H',b,c)
 
-def binary_tree_from_preorder_inorder(preorder, inorder):
+def x_binary_tree_from_preorder_inorder(preorder, inorder):
     def reconstruct_tree(preorder, inorder):
         # TODO - you fill in here.
         # 1. root is first node in preorder traversal
@@ -58,6 +58,26 @@ def binary_tree_from_preorder_inorder(preorder, inorder):
     # element_index = {data: i for i,data in enumerate(inorder)}
     return reconstruct_tree(preorder, inorder)
 
+def binary_tree_from_preorder_inorder(preorder, inorder):
+    # for a preorder traversal, the first element is the root,
+    # followed by a set of elements for the left subtree then the right
+    # the set of left subtree elements in the preorder traversal can be determined by
+    # using the root element to divide the inorder traversal elements into
+    # left and right subtree elements,
+    # the left subtree elements in the inorder traversal is the elements that
+    # preceeds the root element in the inorder traversal
+    if not preorder:
+        return None
+    root_val = preorder[0]
+    root = BstNode(root_val)
+    inorder_root_index = inorder.index(root_val)
+    inorder_left_tree = inorder[:inorder_root_index]
+    inorder_right_tree = inorder[inorder_root_index+1:]
+    preorder_left_tree = preorder[1:(len(inorder_left_tree) + 1)] #skip root
+    preorder_right_tree = preorder[(len(inorder_left_tree) + 1):]
+    root.left = binary_tree_from_preorder_inorder(preorder_left_tree, inorder_left_tree)
+    root.right = binary_tree_from_preorder_inorder(preorder_right_tree, inorder_right_tree)
+    return root
 
 if __name__ == '__main__':
     exit(
