@@ -29,7 +29,7 @@ def x_search_first_of_k(A, k):
         lower_found_index = binary_search(A[:found_index],k)
     return found_index
 
-def search_first_of_k(A, k):
+def x_search_first_of_k(A, k):
     lower, upper, result = 0, len(A) - 1, -1
     while lower <= upper:
         mid = (upper - lower) // 2 + lower
@@ -42,7 +42,47 @@ def search_first_of_k(A, k):
             lower = mid + 1
     return result
 
+def bsearch(k, A):
+    # generic binary search for key k in list A
+    # do bisection on each search,
+    # if mid-point equal to key, then return index
+    # if key is less than midpoint, then search in elements before midpoint
+    # if key is greater than midpoint, then seach in elements after midpoint
 
+    # L: lower index
+    # U: upper index
+    L, U = 0, len(A) - 1
+    while L <= U:
+        # calculate midpoint
+        M = L + (U - L) // 2
+        if A[M] == k:
+            return M
+        if k < A[M]:
+            U = M - 1
+        else:
+            L = M + 1
+    # nothing found
+    return -1
+
+def search_first_of_k(A, k):
+    # use binary search
+    # if key found, record index and look left for prior occurences using binary search
+    # iterate until possibilities exhausted because don't know where first occurence is
+    first = -1
+    L, U = 0, len(A) - 1
+    while L <= U:
+        M = L + (U - L) // 2
+        if k == A[M]:
+            first = M
+            U = M - 1
+        elif k < A[M]:
+            U = M - 1
+        else:
+            L = M + 1
+    return first
+    
+def fname(arg):
+    pass
 if __name__ == '__main__':
     exit(
         generic_test.generic_test_main(
