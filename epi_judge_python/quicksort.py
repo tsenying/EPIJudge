@@ -8,14 +8,16 @@ def partition(A, lo, hi):
     pivot_value = A[(hi-lo)//2 + lo]
     print('partition pivot_value=', pivot_value)
     while True:
-        if i >= j:
-            print('partition i={}, j={}, return={}'.format(i,j,i))
-            return i
         while A[i] < pivot_value:
             i += 1
         while A[j] > pivot_value:
             j -= 1
+        if i >= j:
+            print('partition i={}, j={}, return={}'.format(i,j,i))
+            return i
         A[i], A[j] = A[j], A[i]
+        i += 1
+        j -= 1
 
 import random
 def partition_from_exercise_11_8(A, left, right):
@@ -50,6 +52,7 @@ def quicksort(A, lo, hi):
         quicksort(A, pivot_index+1, hi)
 
 def qsort(A):
+    print('A=', A)
     quicksort(A, 0, len(A) - 1)
 
 
@@ -58,7 +61,12 @@ def stable_sort_list(L):
     return None
 
 
+# if __name__ == '__main__':
+#     exit(
+#         generic_test.generic_test_main("sort_list.py", 'sort_list.tsv',
+#                                        stable_sort_list))
+
 if __name__ == '__main__':
     exit(
         generic_test.generic_test_main("sort_list.py", 'sort_list.tsv',
-                                       stable_sort_list))
+                                       qsort))
