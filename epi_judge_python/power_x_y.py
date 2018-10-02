@@ -34,12 +34,15 @@ def power(x, y):
 
     if power < 0:
         x, power = 1/x, -power
+    print("result={}, power={}, x={}".format(result, power, x))
 
     while power:
         if power & 1:
             result = x * result
+            print("if power & 1::result={}, power={}, x={}".format(result, power, x))
         x = x * x
         power >>= 1 # divide by half
+        print("result={}, power={}, x={}".format(result, power, x))
     return result
 
 if __name__ == '__main__':
