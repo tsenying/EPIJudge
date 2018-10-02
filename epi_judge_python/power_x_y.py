@@ -1,7 +1,7 @@
 from test_framework import generic_test
 
 
-def power(x, y):
+def power1(x, y):
     # TODO - you fill in here.
     result, exp = 1.0, y
 
@@ -29,6 +29,18 @@ def power(x, y):
 #         print("2. x=", x, "power=", power)
 #     return result
 
+def power(x, y):
+    result, power = 1.0, y
+
+    if power < 0:
+        x, power = 1/x, -power
+
+    while power:
+        if power & 1:
+            result = x * result
+        x = x * x
+        power >>= 1 # divide by half
+    return result
 
 if __name__ == '__main__':
     exit(
